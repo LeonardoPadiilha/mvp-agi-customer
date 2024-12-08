@@ -1,4 +1,4 @@
-package com.leonardo.mvpagi.ms_customer.infra.persistence.gateways;
+package com.leonardo.mvpagi.ms_customer.infra.gateways;
 
 import com.leonardo.mvpagi.ms_customer.application.gateways.CustomerGateway;
 import com.leonardo.mvpagi.ms_customer.domain.CustomerDomain;
@@ -29,26 +29,31 @@ public class CustomerRepositoryGateway implements CustomerGateway {
 
     @Override
     public List<CustomerDomain> findAllCustomers() {
-        return List.of();
+        return customerRepository.findAll().stream()
+                .map(value -> modelMapper.map(value, CustomerDomain.class))
+                .toList();
     }
 
     @Override
     public Optional<CustomerDomain> findCustomerById(Long id) {
-        return Optional.empty();
+        final var customer = customerRepository.findById(id);
+        return customer.map(value -> modelMapper.map(value, CustomerDomain.class));
     }
 
     @Override
     public Optional<CustomerDomain> findCustomerByCpf(String cpf) {
-        return Optional.empty();
+        final var customer = customerRepository.findByCpf(cpf);
+        return customer.map(value -> modelMapper.map(value, CustomerDomain.class));
     }
 
     @Override
     public void update(CustomerDomain customer) {
-
+    final var entity = modelMapper.map(customer, CustomerEntity.class);
+    customerRepository.save(entity);
     }
 
     @Override
     public void delete(Long id) {
-
+        customerRepository.deleteById(id);
     }
 }
