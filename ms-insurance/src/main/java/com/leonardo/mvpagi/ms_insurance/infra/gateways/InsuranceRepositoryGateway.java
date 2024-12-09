@@ -30,17 +30,21 @@ public class InsuranceRepositoryGateway implements InsuranceGateway {
 
     @Override
     public List<InsuranceDomain> findAllInsurances() {
-        return List.of();
+        return insuranceRepository.findAll().stream()
+                .map(entity -> modelMapper.map(entity, InsuranceDomain.class))
+                .toList();
     }
 
     @Override
     public Optional<InsuranceDomain> findInsuranceById(Long id) {
-        return Optional.empty();
+        final var insurance = insuranceRepository.findById(id);
+        return insurance.map(entity -> modelMapper.map(entity, InsuranceDomain.class));
     }
 
     @Override
     public Optional<InsuranceDomain> findInsuranceByCustomerId(Long customerId) {
-        return Optional.empty();
+        final var insurance = insuranceRepository.findInsuranceByCustomerId(customerId);
+        return insurance.map(entity -> modelMapper.map(entity, InsuranceDomain.class));
     }
 
     @Override
@@ -50,6 +54,6 @@ public class InsuranceRepositoryGateway implements InsuranceGateway {
 
     @Override
     public void deleteInsurance(Long id) {
-
+        insuranceRepository.deleteById(id);
     }
 }
