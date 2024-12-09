@@ -1,20 +1,21 @@
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres
+    container_name: insurance-postgres
     environment:
       POSTGRES_DB: ms-insurance-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5430:5432"
     networks:
       - ms-insurance-network
   ms-insurance:
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://ms-insurance-db:5432/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://insurance-postgres:5432/ms-insurance-db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      MS_CUSTOMER_HOST: ms-customer:8080/api/v1
     build: .
     ports:
       - "8081:8081"

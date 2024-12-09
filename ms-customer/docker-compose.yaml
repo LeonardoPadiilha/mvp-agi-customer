@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres-customer
+    container_name: customer-postgres
     environment:
       POSTGRES_DB: ms-customer-db
       POSTGRES_USER: postgres
@@ -12,7 +12,7 @@ services:
       - ms-customer-network
   ms-customer:
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://ms-customer-db:5432/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://customer-postgres:5432/ms-customer-db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
     build: .
