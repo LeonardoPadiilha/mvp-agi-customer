@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:ms-insurance-db
+    username: root
+    password: root
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+  application:
+    name: ms-customer
+server:
+  port: 8081
+logging:
+  level:
+    org.modelmapper: DEBUG
