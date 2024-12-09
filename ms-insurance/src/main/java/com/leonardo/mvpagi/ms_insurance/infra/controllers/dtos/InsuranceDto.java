@@ -8,6 +8,7 @@ public class InsuranceDto {
     private Long id;
     private String policyNumber;
     private Long customerId;
+    private String customerCpf;
     private InsuranceTypeEnum insuranceType;
     private String premiumAmount;
     private String policyStartDate;
@@ -20,6 +21,14 @@ public class InsuranceDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCustomerCpf() {
+        return customerCpf;
+    }
+
+    public void setCustomerCpf(String customerCpf) {
+        this.customerCpf = customerCpf;
     }
 
     public String getPolicyNumber() {

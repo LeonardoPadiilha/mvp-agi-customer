@@ -10,6 +10,7 @@ public class InsuranceDomain {
     private Long id;
     private String policyNumber;
     private Long customerId;
+    private String customerCpf;
     private InsuranceTypeEnum insuranceType;
     private BigDecimal premiumAmount;
     private LocalDateTime policyStartDate = LocalDateTime.now().withNano(0);
@@ -22,6 +23,14 @@ public class InsuranceDomain {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCustomerCpf() {
+        return customerCpf;
+    }
+
+    public void setCustomerCpf(String customerCpf) {
+        this.customerCpf = customerCpf;
     }
 
     public String getPolicyNumber() {

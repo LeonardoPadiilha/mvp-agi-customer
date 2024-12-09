@@ -23,6 +23,9 @@ public class InsuranceEntity {
     private Long customerId;
 
     @NotNull
+    private String customerCpf;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     private InsuranceTypeEnum insuranceType;
 
@@ -42,6 +45,14 @@ public class InsuranceEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCustomerCpf() {
+        return customerCpf;
+    }
+
+    public void setCustomerCpf(String customerCpf) {
+        this.customerCpf = customerCpf;
     }
 
     public String getPolicyNumber() {

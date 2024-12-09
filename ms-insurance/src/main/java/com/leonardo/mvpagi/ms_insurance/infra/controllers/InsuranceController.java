@@ -2,6 +2,8 @@ package com.leonardo.mvpagi.ms_insurance.infra.controllers;
 
 import com.leonardo.mvpagi.ms_insurance.application.usecases.*;
 import com.leonardo.mvpagi.ms_insurance.domain.entities.InsuranceDomain;
+import com.leonardo.mvpagi.ms_insurance.infra.client.dto.SimulationResponseDto;
+import com.leonardo.mvpagi.ms_insurance.infra.controllers.dtos.CustomerDto;
 import com.leonardo.mvpagi.ms_insurance.infra.controllers.dtos.InsuranceDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -20,14 +22,16 @@ public class InsuranceController {
     private final FindInsuranceByCustomerIdUseCase findInsuranceByCustomerIdUseCase;
     private final FindAllInsurancesUseCase findAllInsurancesUseCase;
     private final DeleteInsuranceUseCase deleteInsuranceUseCase;
+    private final SimulateInsuranceUseCase simulateInsuranceUseCase;
 
-    public InsuranceController(ModelMapper modelMapper, CreateInsuranceUseCase createInsuranceUseCase, FindInsuranceByIdUseCase findInsuranceByIdUseCase, FindInsuranceByCustomerIdUseCase findInsuranceByCustomerIdUseCase, FindAllInsurancesUseCase findAllInsurancesUseCase, DeleteInsuranceUseCase deleteInsuranceUseCase) {
+    public InsuranceController(ModelMapper modelMapper, CreateInsuranceUseCase createInsuranceUseCase, FindInsuranceByIdUseCase findInsuranceByIdUseCase, FindInsuranceByCustomerIdUseCase findInsuranceByCustomerIdUseCase, FindAllInsurancesUseCase findAllInsurancesUseCase, DeleteInsuranceUseCase deleteInsuranceUseCase, com.leonardo.mvpagi.ms_insurance.application.usecases.SimulateInsuranceUseCase simulateInsuranceUseCase) {
         this.modelMapper = modelMapper;
         this.createInsuranceUseCase = createInsuranceUseCase;
         this.findInsuranceByIdUseCase = findInsuranceByIdUseCase;
         this.findInsuranceByCustomerIdUseCase = findInsuranceByCustomerIdUseCase;
         this.findAllInsurancesUseCase = findAllInsurancesUseCase;
         this.deleteInsuranceUseCase = deleteInsuranceUseCase;
+        this.simulateInsuranceUseCase = simulateInsuranceUseCase;
     }
 
     @GetMapping
@@ -60,4 +64,12 @@ public class InsuranceController {
         deleteInsuranceUseCase.deleteInsurance(id);
     }
 
+    @GetMapping("/simulate/{cpf}")
+    public ResponseEntity<SimulationResponseDto> simulateInsurance(@PathVariable("cpf") String cpf, @RequestBody InsuranceDto insuranceDto) {
+        var result = simulateInsuranceUseCase.execute(cpf, modelMapper.map(insuranceDto.getInsuranceType(), InsuranceDomain.class).getInsuranceType());
+        var response = new SimulationResponseDto();
+        response.setCustomer(modelMapper.map(result, CustomerDto.class));
+        response.setInsuranceType(insuranceDto.getInsuranceType());
+        return ResponseEntity.ok(response);
+    }
 }

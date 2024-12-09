@@ -1,15 +1,22 @@
-package com.leonardo.mvpagi.ms_customer.infra.controllers.dtos;
-
+package com.leonardo.mvpagi.ms_insurance.domain.entities;
 
 import java.time.LocalDate;
 
-public class CustomerDto {
+public class CustomerDomain {
     private Long id;
     private String name;
+    private LocalDate birthDate;
     private String cpf;
     private String phone;
-    private LocalDate birthDate;
-    private String address;
+
+    public CustomerDomain(){}
+
+    public CustomerDomain(String name, LocalDate birthDate, String cpf, String phone) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.cpf = cpf;
+        this.phone = phone;
+    }
 
     public Long getId() {
         return id;
@@ -27,6 +34,14 @@ public class CustomerDto {
         this.name = name;
     }
 
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
     public String getCpf() {
         return cpf;
     }
@@ -41,21 +56,5 @@ public class CustomerDto {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }
