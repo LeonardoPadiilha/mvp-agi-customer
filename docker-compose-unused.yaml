@@ -1,3 +1,4 @@
+services:
   ms-customer-api:
     image: ms-customer:latest
     build: ./ms-customer
@@ -11,7 +12,6 @@
       SPRING_DATASOURCE_URL: jdbc:postgresql://ms-customer-db:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
-      # MS_ORDER_HOST: ms-order-api:8091
 
   ms-customer-db:
     image: postgres:latest
@@ -25,7 +25,7 @@
     networks:
       - mvp-agibank-network
 
-###################################################################################################################
+  ###################################################################################################################
   ms-insurance-api:
     image: ms-insurance:latest
     build: ./ms-insurance
@@ -39,7 +39,6 @@
       SPRING_DATASOURCE_URL: jdbc:postgresql://ms-insurance-db:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
-      # MS_ORDER_HOST: ms-order-api:8091
 
   ms-insurance-db:
     image: postgres:latest
@@ -53,7 +52,7 @@
     networks:
       - mvp-agibank-network
 
-###################################################################################################################
+  ###################################################################################################################
 networks:
   mvp-agibank-network:
     driver: bridge

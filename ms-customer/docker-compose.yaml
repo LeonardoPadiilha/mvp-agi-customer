@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-customer
+    environment:
+      POSTGRES_DB: ms-customer-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5431:5432"
+    networks:
+      - ms-customer-network
+  ms-customer:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ms-customer-db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - ms-customer-network
+networks:
+  ms-customer-network:
+    driver: bridge
