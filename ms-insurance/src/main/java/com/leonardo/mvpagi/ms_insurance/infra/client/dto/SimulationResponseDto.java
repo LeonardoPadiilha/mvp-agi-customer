@@ -7,6 +7,11 @@ public class SimulationResponseDto {
     private CustomerDto customer;
     private InsuranceTypeEnum insuranceType;
 
+    public SimulationResponseDto() {
+    }
+    public SimulationResponseDto(String s) {
+    }
+
     public CustomerDto getCustomer() {
         return customer;
     }
