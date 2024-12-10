@@ -1,3 +1,4 @@
+name: mvp-agibank
 services:
   ms-customer-api:
     image: ms-customer:latest
@@ -7,13 +8,13 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - ms-customer-db
+      - customer-db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://ms-customer-db:5432/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://customer-db:5432/ms-customer-db?createDatabaseIfNotExist=true?useSSL=false?serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
 
-  ms-customer-db:
+  customer-db:
     image: postgres:latest
     container_name: postgres_customer
     environment:
@@ -21,7 +22,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5419:5432"
+      - "5431:5432"
     networks:
       - mvp-agibank-network
 
@@ -34,13 +35,14 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - ms-insurance-db
+      - insurance-db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://ms-insurance-db:5432/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://insurance-db:5432/ms-insurance-db?createDatabaseIfNotExist=true?useSSL=false?serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      MS_CUSTOMER_HOST: ms-customer-api:8080
 
-  ms-insurance-db:
+  insurance-db:
     image: postgres:latest
     container_name: postgres_insurance
     environment:
@@ -48,7 +50,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5420:5432"
+      - "5430:5432"
     networks:
       - mvp-agibank-network
 
