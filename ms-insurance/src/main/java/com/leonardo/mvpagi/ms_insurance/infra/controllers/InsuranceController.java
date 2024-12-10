@@ -28,8 +28,9 @@ public class InsuranceController {
     private final DeleteInsuranceUseCase deleteInsuranceUseCase;
     private final SimulateInsuranceUseCase simulateInsuranceUseCase;
     private final FallbackExecutor fallbackExecutor;
+    private final UpdateInsuranceUseCase updateInsuranceUseCase;
 
-    public InsuranceController(ModelMapper modelMapper, CreateInsuranceUseCase createInsuranceUseCase, FindInsuranceByIdUseCase findInsuranceByIdUseCase, FindInsuranceByCustomerIdUseCase findInsuranceByCustomerIdUseCase, FindAllInsurancesUseCase findAllInsurancesUseCase, DeleteInsuranceUseCase deleteInsuranceUseCase, com.leonardo.mvpagi.ms_insurance.application.usecases.SimulateInsuranceUseCase simulateInsuranceUseCase, FallbackExecutor fallbackExecutor) {
+    public InsuranceController(ModelMapper modelMapper, CreateInsuranceUseCase createInsuranceUseCase, FindInsuranceByIdUseCase findInsuranceByIdUseCase, FindInsuranceByCustomerIdUseCase findInsuranceByCustomerIdUseCase, FindAllInsurancesUseCase findAllInsurancesUseCase, DeleteInsuranceUseCase deleteInsuranceUseCase, com.leonardo.mvpagi.ms_insurance.application.usecases.SimulateInsuranceUseCase simulateInsuranceUseCase, FallbackExecutor fallbackExecutor, UpdateInsuranceUseCase updateInsuranceUseCase) {
         this.modelMapper = modelMapper;
         this.createInsuranceUseCase = createInsuranceUseCase;
         this.findInsuranceByIdUseCase = findInsuranceByIdUseCase;
@@ -38,6 +39,7 @@ public class InsuranceController {
         this.deleteInsuranceUseCase = deleteInsuranceUseCase;
         this.simulateInsuranceUseCase = simulateInsuranceUseCase;
         this.fallbackExecutor = fallbackExecutor;
+        this.updateInsuranceUseCase = updateInsuranceUseCase;
     }
 
     @GetMapping
@@ -82,6 +84,15 @@ public class InsuranceController {
             return ResponseEntity.ok(response);
 
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<InsuranceDto> updateInsurance(@PathVariable Long id, @RequestBody InsuranceDto insuranceDto) {
+        var request = modelMapper.map(insuranceDto, InsuranceDomain.class);
+        request.setId(id);
+        updateInsuranceUseCase.updateInsurance(request);
+        return ResponseEntity.ok(insuranceDto);
+    }
+
     public ResponseEntity<SimulationResponseDto> fallbackFindCustomerByCpf (String cpf, InsuranceDto insuranceDto, Throwable t){
         log.info("Falha ao simular seguro para o CPF: {}, erro: {}", cpf, t.getMessage());
         var fallbackResponse = new SimulationResponseDto();
