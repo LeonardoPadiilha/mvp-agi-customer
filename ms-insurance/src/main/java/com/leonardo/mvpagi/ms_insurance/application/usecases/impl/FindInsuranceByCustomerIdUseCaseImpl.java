@@ -15,6 +15,6 @@ public class FindInsuranceByCustomerIdUseCaseImpl implements FindInsuranceByCust
 
     @Override
     public InsuranceDomain findInsuranceByCustomerId(Long customerId) {
-        return insuranceGateway.findInsuranceByCustomerId(customerId).orElseThrow(() -> new NotFoundException("Insurance not found"));
+        return insuranceGateway.findInsuranceByCustomerId(customerId).orElseThrow(() -> new NotFoundException("Customer not found"));
     }
 }

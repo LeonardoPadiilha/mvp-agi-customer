@@ -28,6 +28,4 @@ public class NotFoundException extends RuntimeException {
     public static NotFoundException of(final String resource) {
         return new NotFoundException(resource);
     }
-
-
 }

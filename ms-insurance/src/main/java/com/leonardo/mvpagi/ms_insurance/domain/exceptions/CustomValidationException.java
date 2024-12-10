@@ -18,7 +18,7 @@ public class CustomValidationException extends RuntimeException{
 
     @Override
     public String getMessage() {
-        return format("{0} {1}", field, message);
+        return format("%s %s", field, message);
     }
 
     public static CustomValidationException of(final String field, final String message) {

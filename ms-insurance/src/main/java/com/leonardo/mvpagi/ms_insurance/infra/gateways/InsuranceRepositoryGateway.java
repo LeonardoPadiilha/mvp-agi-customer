@@ -49,7 +49,9 @@ public class InsuranceRepositoryGateway implements InsuranceGateway {
 
     @Override
     public void updateInsurance(InsuranceDomain insuranceDomain) {
-
+        final var entity = modelMapper.map(insuranceDomain, InsuranceEntity.class);
+        entity.setId(insuranceDomain.getId());
+        insuranceRepository.save(entity);
     }
 
     @Override

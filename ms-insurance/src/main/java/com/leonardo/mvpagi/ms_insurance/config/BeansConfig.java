@@ -42,6 +42,11 @@ public class BeansConfig {
     }
 
     @Bean
+    public UpdateInsuranceUseCase updateInsuranceUseCase(InsuranceGateway insuranceGateway) {
+        return new UpdateInsuranceUseCaseImpl(insuranceGateway);
+    }
+
+    @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
