@@ -16,16 +16,17 @@ public class CustomerEntity {
     private String name;
 
     @Column(nullable = false, unique = true)
-    @Size(min = 11, max = 11)
+    @Size(min = 11, max = 11, message = "CPF must have 11 characters")
     private String cpf;
 
     @Column(nullable = false)
     private LocalDate birthDate;
 
     @Column(nullable = false)
+    @Size(min = 11, max = 11, message = "Phone must have 11 characters")
     private String phone;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String address;
 
     public Long getId() {
